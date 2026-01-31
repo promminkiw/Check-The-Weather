@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 header('Content-Type: application/json; charset=utf-8');
+header('Access-Control-Allow-Origin: *');
 
 // --- Configuration ---
 $DEFAULT_LAT = 13.7563;
@@ -255,20 +256,68 @@ function resolve_place_to_coords(string $name, ?string $cacheDir, int $ttlForwar
  */
 function reverse_locality(float $lat, float $lon, ?string $cacheDir, int $ttl): string {
   $key = sprintf('reverse_%.4f_%.4f.json', $lat, $lon);
+
+  // 1) cache hit
   $cached = cache_get($cacheDir, $key, $ttl);
-  if ($cached && !empty($cached['locality'])) return (string)$cached['locality'];
-
-  $url = "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude={$lat}&longitude={$lon}&localityLanguage=th";
-  $data = http_get_json($url);
-
-  $locality = 'ไม่ทราบตำแหน่ง';
-  if ($data) {
-    $locality = (string)($data['locality'] ?? $data['city'] ?? $data['principalSubdivision'] ?? $locality);
+  if ($cached && !empty($cached['locality']) && $cached['locality'] !== 'ไม่ทราบตำแหน่ง') {
+    return (string)$cached['locality'];
   }
 
+  $unknown = 'ไม่ทราบตำแหน่ง';
+
+  // helper ทำความสะอาดชื่อ
+  $clean = function($s) {
+    $s = trim((string)$s);
+    if ($s === '' || $s === 'undefined' || $s === 'null') return '';
+    return $s;
+  };
+
+  // 2) Provider A: BigDataCloud (เร็ว)
+  $locality = '';
+  $urlA = "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude={$lat}&longitude={$lon}&localityLanguage=th";
+  $dataA = http_get_json($urlA);
+
+  if (is_array($dataA)) {
+    $locality = $clean($dataA['locality'] ?? '')
+      ?: $clean($dataA['city'] ?? '')
+      ?: $clean($dataA['principalSubdivision'] ?? '');
+  }
+
+  // 3) Provider B: Nominatim (fallback ถ้า A ว่าง)
+  if ($locality === '') {
+    $urlB = "https://nominatim.openstreetmap.org/reverse"
+      . "?format=jsonv2"
+      . "&lat=" . urlencode((string)$lat)
+      . "&lon=" . urlencode((string)$lon)
+      . "&zoom=14"
+      . "&addressdetails=1"
+      . "&accept-language=th";
+
+    $dataB = http_get_json($urlB);
+    if (is_array($dataB)) {
+      $addr = $dataB['address'] ?? [];
+      // ลำดับนี้จะได้ค่าที่ “อ่านง่าย” มากกว่า
+      $locality =
+        $clean($addr['suburb'] ?? '') ?:
+        $clean($addr['city_district'] ?? '') ?:
+        $clean($addr['district'] ?? '') ?:
+        $clean($addr['city'] ?? '') ?:
+        $clean($addr['town'] ?? '') ?:
+        $clean($addr['state'] ?? '') ?:
+        $clean($dataB['display_name'] ?? '');
+    }
+  }
+
+  // 4) ถ้ายังว่างจริง ค่อย unknown แต่ "อย่า cache unknown"
+  if ($locality === '') {
+    return $unknown;
+  }
+
+  // cache เฉพาะค่าที่มีความหมาย
   cache_put($cacheDir, $key, ['locality' => $locality]);
   return $locality;
 }
+
 
 // --- Resolve input -> coords ---
 $provider = null;

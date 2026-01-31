@@ -1,8 +1,8 @@
 {
     "ok": true,
     "meta": {
-        "lat": 16.443103,
-        "lon": 102.83115000000001,
+        "lat": 16.442070648843103,
+        "lon": 102.83100771636188,
         "unit": "celsius",
         "source": "open-meteo",
         "source_label": "GPS",
