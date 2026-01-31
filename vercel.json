@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/weather.php",
+      "destination": "https://check-the-weather-wlj6.onrender.com/weather.php"
+    }
+  ]
+}
