@@ -48,7 +48,7 @@ Check-The-Weather/
 │ ├── snow.jpg
 │ └── thunder.jpg
 └── README.md
-
+```
 ---
 
 ## ▶️ วิธีใช้งาน (Run Project)
@@ -56,6 +56,7 @@ Check-The-Weather/
 ### วิธีที่ 1: ใช้ PHP Built-in Server (แนะนำ)
 ```bash
 php -S localhost:8000
+```
 
 เปิด Browser:
 http://localhost:8000/index.html
