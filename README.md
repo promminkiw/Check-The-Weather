@@ -33,6 +33,7 @@
 
 ---------------------------------------
 
+```text
 Check-The-Weather/
 ├── index.html # หน้าเว็บหลัก
 ├── weather.php # Backend สำหรับเรียก API สภาพอากาศ
