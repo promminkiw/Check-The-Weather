@@ -654,13 +654,16 @@
           return;
         }
 
-        // เลือกแสดง 8 ช่องแรกให้เหมือนตัวอย่าง (ปรับได้)
-        const MAX_ITEMS = 8;
+        // ✅ แสดง 24 ชั่วโมง ตั้งแต่ตอนนี้ถึง 24 ชั่วโมงข้างหน้า
+        const MAX_ITEMS = 24;
         const len = Math.min(times.length, temps.length, MAX_ITEMS);
 
         let html = "";
         for (let i = 0; i < len; i++) {
-          const timeLabel = formatHourLabel(times[i]);
+          // ✅ คำนวณเวลา 24 ชั่วโมงถัดไป
+          const currentTime = new Date();
+          const futureTime = new Date(currentTime.getTime() + i * 3600000);
+          const timeLabel = String(futureTime.getHours()).padStart(2, '0') + ":00";
 
           const tempVal = Number(temps[i]);
           const showTemp = Number.isFinite(tempVal) ? tempVal.toFixed(0) : "--";

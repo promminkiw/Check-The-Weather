@@ -1,8 +1,8 @@
 {
     "ok": true,
     "meta": {
-        "lat": 16.4423899688627,
-        "lon": 102.83101401451314,
+        "lat": 16.442401542781298,
+        "lon": 102.83104303757403,
         "unit": "celsius",
         "source": "open-meteo",
         "source_label": "GPS",
@@ -11,11 +11,11 @@
         "cache": "MISS"
     },
     "data": {
-        "time_local": "2026-01-31T16:00",
-        "temperature_c": 29.4,
-        "humidity_percent": 44,
-        "wind_kmh": 8.6,
-        "weather_code": 3,
+        "time_local": "2026-01-31T17:15",
+        "temperature_c": 28.6,
+        "humidity_percent": 48,
+        "wind_kmh": 4.7,
+        "weather_code": 2,
         "is_day": true
     },
     "hourly": {
@@ -107,17 +107,17 @@
             25.2,
             27.4,
             28.9,
-            29.6,
-            29.9,
-            29.8,
-            29.4,
-            28.3,
-            25.9,
-            24.9,
-            23.9,
-            22.3,
+            30.3,
+            30.5,
+            30.5,
+            30.2,
+            29.2,
+            26.7,
+            25,
+            23.5,
+            22.2,
             21.4,
-            20.3
+            20.5
         ]
     }
 }
