@@ -1,8 +1,9 @@
 {
-  "rewrites": [
+  "routes": [
     {
-      "source": "/weather.php",
-      "destination": "https://check-the-weather-wlj6.onrender.com/weather.php"
-    }
+      "src": "^/weather\\.php$",
+      "dest": "https://check-the-weather-wlj6.onrender.com/weather.php"
+    },
+    { "handle": "filesystem" }
   ]
 }
