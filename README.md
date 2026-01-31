@@ -33,22 +33,20 @@
 
 ---------------------------------------
 
-Project Structure \n
-Check-The-Weather/ \n
-├── index.html # หน้าเว็บหลัก \n
-├── weather.php # Backend สำหรับเรียก API สภาพอากาศ \n
-├── regions.json # ข้อมูลภาค \n
-├── provinces.json # ข้อมูลจังหวัด \n
-├── bg/ # ภาพพื้นหลังตามสภาพอากาศ \n
-│ ├── clear-day.jpg \n
-│ ├── clear-night.jpg \n 
-│ ├── cloudy.jpg \n
-│ ├── rain.jpg \n
-│ ├── fog.jpg \n
-│ ├── snow.jpg \n
-│ └── thunder.jpg \n
-└── README.md \n
-
+Check-The-Weather/
+├── index.html # หน้าเว็บหลัก
+├── weather.php # Backend สำหรับเรียก API สภาพอากาศ
+├── regions.json # ข้อมูลภาค
+├── provinces.json # ข้อมูลจังหวัด
+├── bg/ # ภาพพื้นหลังตามสภาพอากาศ
+│ ├── clear-day.jpg
+│ ├── clear-night.jpg
+│ ├── cloudy.jpg
+│ ├── rain.jpg
+│ ├── fog.jpg
+│ ├── snow.jpg
+│ └── thunder.jpg
+└── README.md
 
 ---
 
